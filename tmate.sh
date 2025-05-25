@@ -7,6 +7,8 @@
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=================================================
+echo "GITHUB_TOKEN: $GITHUB_TOKEN"
+
 [ $(uname) != Linux ] && {
     echo -e "This operating system is not supported."
     exit 1
@@ -32,7 +34,7 @@ else
     exit 1
 fi
 echo -e "${INFO} Check the version of tmate ..."
-curl -H "Authorization: Bearer ${REPO_TOKEN}" https://api.github.com/repos/tmate-io/tmate/releases/latest -o tmateapi
+curl -H "Authorization: Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/tmate-io/tmate/releases/latest -o tmateapi
 tmate_ver=$(grep -o '"tag_name": ".*"' tmateapi | head -n 1 | sed 's/"//g;s/v//g' | sed 's/tag_name: //g')
 [ -z $tmate_ver ] && {
     echo -e "${ERROR} Unable to check the version, network failure or API error."
