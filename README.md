@@ -5,9 +5,15 @@ Interactive debugger for GitHub Actions. The connection information can sent to 
 ## Usage
 
 ```yml
-steps:
-- name: Setup Debug Session
-  uses: danshui-git/debugger-action@main
+    steps:
+    - name: SSH远程连接（make menuconfig）
+      uses: danshui-git/debugger-action@main
+      with:
+        telegaram_token: ${{ env.TELEGRAM_BOT_TOKEN }}
+        telegaram_id: ${{ env.TELEGRAM_CHAT_ID }}
+        push_token: ${{ env.PUSH_PLUS_TOKEN }}
+        notification_code: ${{ env.INFORMATION_NOTICE }}
+        gh_token: ${{ secrets.REPO_TOKEN }}
 ```
 
 ## Acknowledgments
