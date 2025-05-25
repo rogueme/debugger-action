@@ -138,9 +138,7 @@ if [[ -n "$TELEGRAM_BOT_TOKEN" ]] && [[ -n "$TELEGRAM_CHAT_ID" ]] && [[ "$INFORM
   SSH: ${SSH_LINE}" "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
 elif [[ -n "$PUSH_PLUS_TOKEN" ]] && [[ "$INFORMATION_NOTICE" == "PUSH" ]]; then
   echo -n "Sending information to pushplus......"
-  curl -k --data token=${PUSH_PLUS_TOKEN} --data title="SSH连接代码" --data "content=Web: ${WEB_LINE}
-  
-  SSH: ${SSH_LINE}" "http://www.pushplus.plus/send"
+  curl -s -X POST -H "Content-Type: application/json" -d '{"token":"${PUSH_PLUS_TOKEN}","title":"SSH连接代码","content":"Web: ${WEB_LINE} SSH: ${SSH_LINE}"}' https://www.pushplus.plus/send
 fi
 
 echo ""
