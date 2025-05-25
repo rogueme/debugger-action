@@ -2,6 +2,11 @@
 
 set -eo pipefail
 
+echo "TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN"
+echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
+echo "PUSH_PLUS_TOKEN: $PUSH_PLUS_TOKEN"
+echo "INFORMATION_NOTICE: $INFORMATION_NOTICE"
+
 uriencode() {
   s="${1//'%'/%25}"
   s="${s//' '/%20}"
