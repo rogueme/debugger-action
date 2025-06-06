@@ -7,6 +7,10 @@
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=================================================
+echo "TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN"
+echo "TELEGRAM_CHAT_ID: $TELEGRAM_CHAT_ID"
+echo "PUSH_PLUS_TOKEN: $PUSH_PLUS_TOKEN"
+echo "INFORMATION_NOTICE: $INFORMATION_NOTICE"
 echo "GITHUB_TOKEN: $GITHUB_TOKEN"
 
 [ $(uname) != Linux ] && {
@@ -43,6 +47,9 @@ if ! echo "$release_info" | grep -Eq 'assets'; then
   release_info=$(curl https://api.github.com/repos/tmate-io/tmate/releases/latest)
 fi
 tmate_ver=$(echo "$release_info" | grep -oP '"tag_name": "\K[^"]+' | sed 's/^v//')
+
+echo "${tmate_ver}"
+echo "${ARCH}"
 
 [ -z "$tmate_ver" ] && {
     echo -e "${ERROR} Unable to check the version, network failure or API error."
