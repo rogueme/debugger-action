@@ -176,10 +176,10 @@ while [ -S "${TMATE_SOCK}" ]; do
       echo "您可以使用SSH终端连接，或者使用网页直接连接"
       echo "终端连接IP为SSH:后面的代码，网页连接直接点击Web后面的链接，然后以[ctrl+c]开始和[ctrl+d]结束"
       echo "命令：cd openwrt && make menuconfig"
-      echo -e "\e[32m  \e[0m"
+      echo -e ""
       echo -e " SSH: \e[32m ${SSH_LINE} \e[0m"
       echo -e " Web: \e[33m ${WEB_LINE} \e[0m"
-      echo -e "\e[32m  \e[0m"
+      echo -e ""
       
      [ "x${user_connected}" != "x1" ] && (
        echo -e "\n如果您还不连接SSH，\e[31m将在\e[0m $(( timeout-timecounter )) 秒内自动跳过"
