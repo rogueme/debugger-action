@@ -7,6 +7,8 @@
 # Author: P3TERX
 # Blog: https://p3terx.com
 #=================================================
+echo "GITHUB_TOKEN: $GITHUB_TOKEN"
+
 [ $(uname) != Linux ] && {
     echo -e "This operating system is not supported."
     exit 1
