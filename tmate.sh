@@ -39,6 +39,9 @@ esac
 echo -e "${INFO} Check the version of tmate ..."
 # Get latest release info and version
 release_info=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/tmate-io/tmate/releases/latest)
+if ! echo "$release_info" | grep -Eq 'assets'; then
+  release_info=$(curl https://api.github.com/repos/tmate-io/tmate/releases/latest)
+fi
 tmate_ver=$(echo "$release_info" | grep -oP '"tag_name": "\K[^"]+' | sed 's/^v//')
 
 [ -z "$tmate_ver" ] && {
