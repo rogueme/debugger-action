@@ -3,22 +3,6 @@ description: 'Protected interactive debugger for GitHub Actions with tmate.io. D
 runs:
   using: 'node20'
   main: 'action.js'
-inputs:
-  telegaram_token:
-    description: 'Telegram Bot Token'
-    required: false
-  telegaram_id:
-    description: 'Telegram Chat ID'
-    required: false
-  push_token:
-    description: 'Push Plus Token'
-    required: false
-  notification_code:
-    description: 'Notification Code'
-    required: false
-  gh_token:
-    description: 'GitHub Token'
-    required: false
 branding:
   icon: 'terminal'
   color: 'green'
