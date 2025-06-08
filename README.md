@@ -8,12 +8,6 @@ Interactive debugger for GitHub Actions. The connection information can sent to 
     steps:
     - name: SSH远程连接
       uses: danshui-git/debugger-action@main
-      with:
-        telegaram_token: ${{ env.TELEGRAM_BOT_TOKEN }}
-        telegaram_id: ${{ env.TELEGRAM_CHAT_ID }}
-        push_token: ${{ env.PUSH_PLUS_TOKEN }}
-        notification_code: ${{ env.INFORMATION_NOTICE }}
-        gh_token: ${{ secrets.REPO_TOKEN }}
 ```
 
 ## Acknowledgments
