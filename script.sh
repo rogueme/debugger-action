@@ -32,7 +32,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # Shorten this URL to avoid mask by Github Actions Runner
 README_URL="https://github.com/tete1030/safe-debugger-action/blob/master/README.md"
 README_URL_SHORT="$(curl -si https://git.io -F "url=${README_URL}" | tr -d '\r' | sed -En 's/^Location: (.*)/\1/p')"
-
+CONTINUE_FILE="/tmp/continue"
 cleanup() {
   if [ -n "${container_id}" ] && [ "x${docker_type}" = "ximage" ]; then
     echo "Current docker container will be saved to your image: ${TMATE_DOCKER_IMAGE_EXP}"
@@ -170,6 +170,7 @@ while [ -S "${TMATE_SOCK}" ]; do
   if (( timecounter % display_int == 0 )); then
       echo "您可以使用SSH终端连接，或者使用网页直接连接"
       echo "终端连接IP为SSH:后面的代码，网页连接直接点击Web后面的链接，然后以[ctrl+c]开始和[ctrl+d]结束"
+      echo -e "提示: 运行 'touch ${CONTINUE_FILE}' 可跳过SSH终端执行下一个步骤."
       echo "命令：cd openwrt && make menuconfig"
       echo -e "\e[32m  \e[0m"
       echo -e " SSH: \e[32m ${SSH_LINE} \e[0m"
@@ -184,6 +185,10 @@ while [ -S "${TMATE_SOCK}" ]; do
   fi
 
   sleep 1
+  if [[ -e ${CONTINUE_FILE} ]]; then
+      echo -e "${INFO} Continue to the next step."
+      exit 0
+  fi
   timecounter=$((timecounter+1))
 done
 
