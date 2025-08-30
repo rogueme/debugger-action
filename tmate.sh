@@ -32,12 +32,29 @@ else
     exit 1
 fi
 echo -e "${INFO} Check the version of tmate ..."
-curl -H "Authorization: Bearer ${REPO_TOKEN}" https://api.github.com/repos/tmate-io/tmate/releases/latest -o tmateapi
-tmate_ver=$(grep -o '"tag_name": ".*"' tmateapi | head -n 1 | sed 's/"//g;s/v//g' | sed 's/tag_name: //g')
+curl_args=("-fsSL" "https://api.github.com/repos/tmate-io/tmate/releases/latest" "-o" "tmateapi")
+if [ -n "${REPO_TOKEN}" ]; then
+    echo -e "${INFO} Using REPO_TOKEN for GitHub API request"
+    curl_args+=("-H" "Authorization: Bearer ${REPO_TOKEN}")
+fi
+http_code=$(curl "${curl_args[@]}" -w "%{http_code}")
+if [ "${http_code}" -ne 200 ]; then
+    echo -e "${ERROR} GitHub API request failed (HTTP code: ${http_code})"
+    echo -e "${ERROR} API response preview: $(cat tmateapi | head -10)"
+    exit 1
+fi
+tmate_ver=$(grep -o '"tag_name": ".*"' tmateapi | head -n 1 \
+    | sed 's/"tag_name": "//g' \
+    | sed 's/"//g' \
+    | sed 's/^v//')
 [ -z $tmate_ver ] && {
     echo -e "${ERROR} Unable to check the version, network failure or API error."
     exit 1
 }
+if [ -z "${tmate_ver}" ]; then
+    echo -e "${INFO} Use fallback version: 2.4.0 (failed to parse latest version)"
+    tmate_ver="2.4.0"
+fi
 [ $(command -v tmate) ] && {
     [[ $(tmate -V) != "tmate $tmate_ver" ]] && {
         echo -e "${INFO} Uninstall the old version ..."
@@ -49,7 +66,7 @@ tmate_ver=$(grep -o '"tag_name": ".*"' tmateapi | head -n 1 | sed 's/"//g;s/v//g
 }
 tmate_name="tmate-${tmate_ver}-static-linux-${ARCH}"
 echo -e "${INFO} Download tmate ..."
-curl -fsSLO "https://github.com/tmate-io/tmate/releases/download/${tmate_ver}/${tmate_name}.tar.xz" || {
+curl -fsSLO "https://github.com/tmate-io/tmate/releases/download/v${tmate_ver}/${tmate_name}.tar.xz" || {
     echo -e "${ERROR} Unable to download tmate, network failure or other error."
     exit 1
 }
@@ -59,4 +76,4 @@ $SUDO mv ${tmate_name}/tmate /usr/local/bin && echo -e "${INFO} tmate successful
     echo -e "${ERROR} tmate installation failed !"
     exit 1
 }
-rm -rf ${tmate_name}*
+rm -rf ${tmate_name}* tmateapi
