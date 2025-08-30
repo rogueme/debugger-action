@@ -65,11 +65,14 @@ fi
     }
 }
 tmate_name="tmate-${tmate_ver}-static-linux-${ARCH}"
+tmate_url="https://github.com/tmate-io/tmate/releases/download/v${tmate_ver}/${tmate_name}.tar.xz"
+echo -e "${INFO} 下载链接：${tmate_url}（手动访问可验证是否存在）"
 echo -e "${INFO} Download tmate ..."
-curl -fsSLO "https://github.com/tmate-io/tmate/releases/download/v${tmate_ver}/${tmate_name}.tar.xz" || {
+curl -fsSLO "${tmate_url}" || {
     echo -e "${ERROR} Unable to download tmate, network failure or other error."
     exit 1
 }
+
 echo -e "${INFO} Installation tmate ..."
 tar Jxvf ${tmate_name}.tar.xz >/dev/null
 $SUDO mv ${tmate_name}/tmate /usr/local/bin && echo -e "${INFO} tmate successful installation !" || {
