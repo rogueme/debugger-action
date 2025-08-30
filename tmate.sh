@@ -65,8 +65,8 @@ fi
     }
 }
 tmate_name="tmate-${tmate_ver}-static-linux-${ARCH}"
-tmate_url="https://github.com/tmate-io/tmate/releases/download/v${tmate_ver}/${tmate_name}.tar.xz"
-echo -e "${INFO} 下载链接：${tmate_url}（手动访问可验证是否存在）"
+tmate_url="https://github.com/tmate-io/tmate/releases/download/${tmate_ver}/${tmate_name}.tar.xz"
+echo -e "${INFO} 下载链接：${tmate_url}"
 echo -e "${INFO} Download tmate ..."
 curl -fsSLO "${tmate_url}" || {
     echo -e "${ERROR} Unable to download tmate, network failure or other error."
