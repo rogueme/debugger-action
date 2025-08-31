@@ -170,7 +170,7 @@ while [ -S "${TMATE_SOCK}" ]; do
   if (( timecounter % display_int == 0 )); then
       echo "您可以使用SSH终端连接，或者使用网页直接连接"
       echo "终端连接IP为SSH:后面的代码，网页连接直接点击Web后面的链接，然后以[ctrl+c]开始和[ctrl+d]结束"
-      echo "容器编译需要先执行 'docker exec -it --user root openwrt-builder bash -c \"cd /workdir && bash\"' 进入容器项目共享目录"
+      echo "容器编译需要先执行 'docker exec -it --user root builder bash -c \"cd /workdir && bash\"' 进入容器项目共享目录"
       echo "命令：cd openwrt && make menuconfig"
       echo -e "提示: 运行 'touch ${CONTINUE_FILE}' 可跳过SSH终端执行下一个步骤."
       echo -e "\e[32m  \e[0m"
